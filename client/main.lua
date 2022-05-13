@@ -404,24 +404,17 @@ function donnermun()
 end
 
 function menuarmes()
-	ESX.PlayerData = ESX.GetPlayerData()
-	local countArmes = 0;
-	for i = 1, #personalf5.WeaponData, 1 do
-		if HasPedGotWeapon(personalf5.Ped, personalf5.WeaponData[i].hash, false) then
-			countArmes = countArmes + 1
-			local ammo = GetAmmoInPedWeapon(personalf5.Ped, personalf5.WeaponData[i].hash)
-			if ammo == 0 then
-				ammo = ammo +1
+	function menuarmes()
+		for i = 1, #personalf5.WeaponData, 1 do
+			if HasPedGotWeapon(PlayerPedId(), personalf5.WeaponData[i].hash, false) then
+				local ammo = GetAmmoInPedWeapon(PlayerPedId(), personalf5.WeaponData[i].hash);
+				Items:AddButton('[~b~' ..ammo.. '~s~] - ~s~' ..personalf5.WeaponData[i].label, nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+					if (onSelected) then
+						personalf5.ItemSelected = personalf5.WeaponData[i]
+					end
+				end, armesselec)
 			end
-			Items:AddButton('[~b~' ..ammo.. '~s~] - ~s~' ..personalf5.WeaponData[i].label, nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
-				if (onSelected) then
-					personalf5.ItemSelected = personalf5.WeaponData[i]
-				end
-			end, armesselec)
 		end
-	end
-	if countArmes == 0 then
-		RageUI.Line(stylevide, "~r~Aucune arme")
 	end
 end
 
