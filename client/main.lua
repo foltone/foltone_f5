@@ -408,6 +408,9 @@ function menuarmes()
 		for i = 1, #personalf5.WeaponData, 1 do
 			if HasPedGotWeapon(PlayerPedId(), personalf5.WeaponData[i].hash, false) then
 				local ammo = GetAmmoInPedWeapon(PlayerPedId(), personalf5.WeaponData[i].hash);
+				if ammo == 0 then
+					ammo = ammo + 1
+				end
 				Items:AddButton('[~b~' ..ammo.. '~s~] - ~s~' ..personalf5.WeaponData[i].label, nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
 					if (onSelected) then
 						personalf5.ItemSelected = personalf5.WeaponData[i]
