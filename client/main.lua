@@ -205,7 +205,39 @@ function RageUI.PoolMenus:Example()
 
 --------------- porte feuille ---------------
 	portefeuille:IsVisible(function(Items)
-		menuportefeuille()
+		Items:AddSeparator("~b~Métier : ~o~"..ESX.PlayerData.job.label)
+
+		Items:AddButton("Facture", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		end, facture)
+
+		Items:AddButton("Papiers", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		end, papiers)
+
+		if ESX.PlayerData.job ~= nil and ESX.PlayerData.job.grade_name == 'boss' then
+			Items:AddButton("Gestion societé : ~o~"..ESX.PlayerData.job.label, nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+			end, gestionsos)
+		end
+		
+		for i = 1, #ESX.PlayerData.accounts, 1 do
+			if ESX.PlayerData.accounts[i].name == 'bank'  then
+				Items:AddButton("Banque : ~b~".. ESX.Math.GroupDigits(ESX.PlayerData.accounts[i].money) .. "$", nil, { RightLabel = "", IsDisabled = false }, function(onSelected)
+				end)
+			end
+		end
+
+		for i = 1, #ESX.PlayerData.accounts, 1 do
+			if ESX.PlayerData.accounts[i].name == 'money'  then
+				Items:AddButton("Liquide : ~g~".. ESX.Math.GroupDigits(ESX.PlayerData.accounts[i].money) .. "$", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+				end, liquide)
+			end
+		end
+
+		for i = 1, #ESX.PlayerData.accounts, 1 do
+			if ESX.PlayerData.accounts[i].name == 'black_money'  then
+				Items:AddButton("Sale : ~r~".. ESX.Math.GroupDigits(ESX.PlayerData.accounts[i].money) .. "$", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+				end, sale)
+			end
+		end
 	end, function()
 	end)
 
@@ -452,41 +484,6 @@ end
 --------------- fin armes ---------------
 
 --------------- porte feuille ---------------
-function menuportefeuille()
-	Items:AddSeparator("~b~Métier : ~o~"..ESX.PlayerData.job.label)
-
-	Items:AddButton("Facture", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
-	end, facture)
-
-	Items:AddButton("Papiers", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
-	end, papiers)
-
-	if ESX.PlayerData.job ~= nil and ESX.PlayerData.job.grade_name == 'boss' then
-		Items:AddButton("Gestion societé : ~o~"..ESX.PlayerData.job.label, nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
-		end, gestionsos)
-	end
-	
-	for i = 1, #ESX.PlayerData.accounts, 1 do
-		if ESX.PlayerData.accounts[i].name == 'bank'  then
-			Items:AddButton("Banque : ~b~".. ESX.Math.GroupDigits(ESX.PlayerData.accounts[i].money) .. "$", nil, { RightLabel = "", IsDisabled = false }, function(onSelected)
-			end)
-		end
-	end
-
-	for i = 1, #ESX.PlayerData.accounts, 1 do
-		if ESX.PlayerData.accounts[i].name == 'money'  then
-			Items:AddButton("Liquide : ~g~".. ESX.Math.GroupDigits(ESX.PlayerData.accounts[i].money) .. "$", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
-			end, liquide)
-		end
-	end
-
-	for i = 1, #ESX.PlayerData.accounts, 1 do
-		if ESX.PlayerData.accounts[i].name == 'black_money'  then
-			Items:AddButton("Sale : ~r~".. ESX.Math.GroupDigits(ESX.PlayerData.accounts[i].money) .. "$", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
-			end, sale)
-		end
-	end
-end
 
 function menufacture()
 	ESX.TriggerServerCallback('VInventory:billing', function(bills) personalf5.billing = bills end)
