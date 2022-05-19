@@ -9,6 +9,8 @@ local personalf5 = {
 	handsUp = false,
 }
 
+accounts = nil
+
 local PlayerProps = {}
 
 local societymoney, societymoney2 = nil, nil
@@ -18,13 +20,13 @@ local stylevide = { BackgroundColor={255, 255, 255, 0}, Line = {250, 250 ,250, 2
 Citizen.CreateThread(function()
 	while ESX == nil do
 		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-		Citizen.Wait(500)
+		Citizen.Wait(100)
 	end
 
 	ESX.PlayerData = ESX.GetPlayerData()
 
 	while ESX.GetPlayerData().job == nil do
-		Citizen.Wait(500)
+		Citizen.Wait(100)
 	end
 
 	RefreshMoney()
@@ -211,7 +213,7 @@ function RageUI.PoolMenus:Example()
 				if personalf5.ItemSelected.usable then
 					TriggerServerEvent('esx:useItem', personalf5.ItemSelected.name)
 				else
-					ESX.ShowNotification("~r~L'items n'est pas utilisable")
+					ESX.ShowNotification("L'items n'est pas utilisable")
 				end
 			end
 		end)
@@ -229,10 +231,10 @@ function RageUI.PoolMenus:Example()
 						if IsPedOnFoot(closestPed) then
 								TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(closestPlayer), 'item_standard', personalf5.ItemSelected.name, quantity)
 							else
-								ESX.ShowNotification("~r~Nombres d'items invalid!")
+								ESX.ShowNotification("Nombres d'items invalid!")
 							end
 					else
-						ESX.ShowNotification("~r~Aucun joueur proche!")
+						ESX.ShowNotification("Aucun joueur proche!")
 					end
 				end
 			end
@@ -294,8 +296,7 @@ function RageUI.PoolMenus:Example()
 									SetPedAmmo(personalf5.Ped, personalf5.ItemSelected.name, finalAmmo)
 
 									TriggerServerEvent('foltone:Weapon_addAmmoToPedS', GetPlayerServerId(closestPlayer), personalf5.ItemSelected.name, quantity)
-									ESX.ShowNotification('Vous avez donné x%s munitions à %s', quantity, GetPlayerName(closestPlayer))
-									--RageUI.CloseAll()
+									ESX.ShowNotification('Vous avez donné '..quantity..' munitions à : '..closestPlayer, quantity, GetPlayerName(closestPlayer))
 								else
 									ESX.ShowNotification('Vous ne possédez pas autant de munitions')
 								end
@@ -303,13 +304,13 @@ function RageUI.PoolMenus:Example()
 								ESX.ShowNotification("Vous n'avez pas de munition")
 							end
 						else
-							ESX.ShowNotification('Vous ne pouvez pas donner des munitions dans un ~~r~véhicule~s~', personalf5.ItemSelected.label)
+							ESX.ShowNotification('Vous ne pouvez pas donner des munitions dans un véhicule', personalf5.ItemSelected.label)
 						end
 					else
-						ESX.ShowNotification('Aucun joueur ~r~proche~s~ !')
+						ESX.ShowNotification('Aucun joueur proche !')
 					end
 				else
-					ESX.ShowNotification('Nombre de munition ~r~invalid')
+					ESX.ShowNotification('Nombre de munition invalid')
 				end
 			end
 		end)
@@ -327,10 +328,10 @@ function RageUI.PoolMenus:Example()
 						local ammo = GetAmmoInPedWeapon(personalf5.Ped, personalf5.ItemSelected.hash)
 						TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(closestPlayer), 'item_weapon', personalf5.ItemSelected.name, ammo)
 					else
-						ESX.ShowNotification('~r~Impossible~s~ de donner une arme dans un véhicule', personalf5.ItemSelected.label)
+						ESX.ShowNotification('Impossible de donner une arme dans un véhicule', personalf5.ItemSelected.label)
 					end
 				else
-					ESX.ShowNotification('Aucun joueur ~r~proche !')
+					ESX.ShowNotification('Aucun joueur proche !')
 				end
 			end
 		end)
@@ -340,7 +341,7 @@ function RageUI.PoolMenus:Example()
 					TriggerServerEvent('esx:removeInventoryItem', 'item_weapon', personalf5.ItemSelected.name)
 					--RageUI.CloseAll()
 				else
-					ESX.ShowNotification("~r~Impossible~s~ de jeter l'armes dans un véhicule", mpersonalf5enu.ItemSelected.label)
+					ESX.ShowNotification("Impossible de jeter l'armes dans un véhicule", mpersonalf5enu.ItemSelected.label)
 				end
 			end
 		end)
@@ -350,8 +351,9 @@ function RageUI.PoolMenus:Example()
 
 --------------- porte feuille ---------------
 	portefeuille:IsVisible(function(Items)
-		Items:AddSeparator("~b~Métier : ~o~"..ESX.PlayerData.job.label)
-
+		if ESX.PlayerData.job.label ~= nil then
+			Items:AddSeparator("~b~Métier : ~o~"..ESX.PlayerData.job.label)
+		end
 		Items:AddButton("Facture", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
 		end, facture)
 
@@ -440,7 +442,7 @@ function RageUI.PoolMenus:Example()
 						TriggerServerEvent('foltone:Boss_recruterplayer', GetPlayerServerId(closestPlayer), ESX.PlayerData.job.name, 0)
 					end
 				else
-					ESX.ShowNotification('Vous n\'avez pas les ~r~droits~w~')
+					ESX.ShowNotification('Vous n\'avez pas les droits')
 				end
 			end
 		end)
@@ -456,7 +458,7 @@ function RageUI.PoolMenus:Example()
 						TriggerServerEvent('foltone:Boss_virerplayer', GetPlayerServerId(closestPlayer))
 					end
 				else
-					ESX.ShowNotification('Vous n\'avez pas les ~r~droits~w~')
+					ESX.ShowNotification('Vous n\'avez pas les droits')
 				end
 			end
 		end)
@@ -472,7 +474,7 @@ function RageUI.PoolMenus:Example()
 						TriggerServerEvent('foltone:Boss_promouvoirplayer', GetPlayerServerId(closestPlayer))
 				end
 				else
-					ESX.ShowNotification('Vous n\'avez pas les ~r~droits~w~')
+					ESX.ShowNotification('Vous n\'avez pas les droits')
 				end
 			end
 		end)
@@ -487,7 +489,7 @@ function RageUI.PoolMenus:Example()
 						TriggerServerEvent('foltone:Boss_destituerplayer', GetPlayerServerId(closestPlayer))
 					end
 				else
-					ESX.ShowNotification('Vous n\'avez pas les ~r~droits~w~')
+					ESX.ShowNotification('Vous n\'avez pas les droits')
 				end
 			end
 		end)
@@ -509,7 +511,7 @@ function RageUI.PoolMenus:Example()
 							if not IsPedSittingInAnyVehicle(closestPed) then
 								TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(closestPlayer), 'item_account', ESX.PlayerData.accounts[i].name, quantity)
 							else
-							   ESX.ShowNotification(_U('Vous ne pouvez pas donner ', 'de l\'argent dans un véhicles'))
+							   ESX.ShowNotification('Vous ne pouvez pas donner ', 'de l\'argent dans un véhicles')
 							end
 						else
 						   ESX.ShowNotification('Aucun joueur proche !')
@@ -531,7 +533,7 @@ function RageUI.PoolMenus:Example()
 							if not IsPedSittingInAnyVehicle(PlayerPed) then
 								TriggerServerEvent('esx:removeInventoryItem', 'item_account', ESX.PlayerData.accounts[i].name, quantity)
 							else
-								ESX.ShowNotification('Vous pouvez pas jeter', 'de l\'argent')
+								ESX.ShowNotification('Vous pouvez pas jeter de l\'argent')
 							end
 						else
 							ESX.ShowNotification('Somme Invalid')
@@ -559,13 +561,13 @@ function RageUI.PoolMenus:Example()
 								TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(closestPlayer), 'item_account', ESX.PlayerData.accounts[i].name, quantity)
 								--RageUI.CloseAll()
 							else
-							   ESX.ShowNotification(_U('Vous ne pouvez pas donner ', 'de l\'argent dans un véhicles'))
+							   ESX.ShowNotification('Vous ne pouvez pas donner de l\'argent dans un véhicles')
 							end
 						else
 						   ESX.ShowNotification('Aucun joueur proche !')
 						end
 						else
-						ESX.ShowNotification('Somme invalid')
+							ESX.ShowNotification('Somme invalid')
 						end
 					end
 				end)
