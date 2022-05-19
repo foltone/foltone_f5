@@ -133,7 +133,6 @@ AddEventHandler('esx:setAccountMoney', function(account)
 	for i=1, #ESX.PlayerData.accounts, 1 do
 		if ESX.PlayerData.accounts[i].name == account.name then
 			ESX.PlayerData.accounts[i] = account
-			break
 		end
 	end
 end)
@@ -369,16 +368,10 @@ function RageUI.PoolMenus:Example()
 				Items:AddButton("Banque : ~b~".. ESX.Math.GroupDigits(ESX.PlayerData.accounts[i].money) .. "$", nil, { RightLabel = "", IsDisabled = false }, function(onSelected)
 				end)
 			end
-		end
-
-		for i = 1, #ESX.PlayerData.accounts, 1 do
 			if ESX.PlayerData.accounts[i].name == 'money'  then
 				Items:AddButton("Liquide : ~g~".. ESX.Math.GroupDigits(ESX.PlayerData.accounts[i].money) .. "$", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
 				end, liquide)
 			end
-		end
-
-		for i = 1, #ESX.PlayerData.accounts, 1 do
 			if ESX.PlayerData.accounts[i].name == 'black_money'  then
 				Items:AddButton("Sale : ~r~".. ESX.Math.GroupDigits(ESX.PlayerData.accounts[i].money) .. "$", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
 				end, sale)
