@@ -67,6 +67,10 @@ local fenetre = RageUI.CreateSubMenu(apparenceveh, "Fenetre", "Fenetre")
 local extra = RageUI.CreateSubMenu(apparenceveh, "Extra", "Extra")
 local limitateur = RageUI.CreateSubMenu(vehicule, "Limitateur", "Limitateur")
 
+local vetementaccessoire = RageUI.CreateSubMenu(Foltonef5, "Vetement", "Vetement | Accessoire")
+local vetement = RageUI.CreateSubMenu(vetementaccessoire, "Vetement", "Vetement")
+local accessoire = RageUI.CreateSubMenu(vetementaccessoire, "Accessoire", "Accessoire")
+
 --------------- fuction ---------------
 
 
@@ -175,6 +179,9 @@ function RageUI.PoolMenus:Example()
 
 		Items:AddButton("Vehicule", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
 		end, vehicule)
+
+		Items:AddButton("Vetement | Accessoire", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		end, vetementaccessoire)
 
 	end, function(Panels)
 	end)
@@ -863,6 +870,261 @@ function RageUI.PoolMenus:Example()
 
 --------------- fin vehicule ---------------
 
+--------------- vetement accessoire ---------------
+
+vetementaccessoire:IsVisible(function(Items)
+	Items:AddButton("Vetement", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		if (onSelected) then
+		end
+	end, vetement)
+	Items:AddButton("Accessoire", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		if (onSelected) then
+		end
+	end, accessoire)
+end, function()
+end)
+
+vetement:IsVisible(function(Items)
+	Items:AddButton("Heau", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		if (onSelected) then
+			startAnimation('clothingtie', 'try_tie_negative_a');
+			Citizen.Wait(1000);
+			ClearPedTasks(PlayerPedId());
+			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin1)
+				TriggerEvent('skinchanger:getSkin', function(skin2)
+					if skin1.torso_1 ~= skin2.torso_1 then
+						TriggerEvent('skinchanger:loadClothes', skin2, {['tshirt_1'] = skin1.tshirt_1, ['tshirt_2'] = skin1.tshirt_2, ['torso_1'] = skin1.torso_1, ['torso_2'] = skin1.torso_2, ['arms'] = skin1.arms});
+					else
+						TriggerEvent('skinchanger:loadClothes', skin2, {['tshirt_1'] = 15, ['tshirt_2'] = 0, ['torso_1'] = 15, ['torso_2'] = 0, ['arms'] = 15});
+					end
+				end)
+			end)
+		end
+	end)
+	Items:AddButton("Gilet Par-Balles", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		if (onSelected) then
+			startAnimation('clothingtie', 'try_tie_negative_a');
+			Citizen.Wait(1000);
+			ClearPedTasks(PlayerPedId());
+			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin1)
+				TriggerEvent('skinchanger:getSkin', function(skin2)
+					if skin1.bproof_1 ~= skin2.bproof_1 then
+						TriggerEvent('skinchanger:loadClothes', skin2, {['bproof_1'] = skin1.bproof_1, ['bproof_2'] = skin1.bproof_2});
+					else
+						TriggerEvent('skinchanger:loadClothes', skin2, {['bproof_1'] = 0, ['bproof_2'] = 0});
+					end
+				end)
+			end)
+		end
+	end)
+	Items:AddButton("Calque", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		if (onSelected) then
+			startAnimation('clothingtie', 'try_tie_negative_a');
+			Citizen.Wait(1000);
+			ClearPedTasks(PlayerPedId());
+			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin1)
+				TriggerEvent('skinchanger:getSkin', function(skin2)
+					if skin1.decals_1 ~= skin2.decals_1 then
+						TriggerEvent('skinchanger:loadClothes', skin2, {['decals_1'] = skin1.decals_1, ['decals_2'] = skin1.decals_2});
+					else
+						TriggerEvent('skinchanger:loadClothes', skin2, {['decals_1'] = -1, ['decals_2'] = 0});
+					end
+				end)
+			end)
+		end
+	end)
+	Items:AddButton("Bras", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		if (onSelected) then
+			startAnimation('missmic4', 'michael_tux_fidget');
+			Citizen.Wait(1000);
+			ClearPedTasks(PlayerPedId());
+			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin1)
+				TriggerEvent('skinchanger:getSkin', function(skin2)
+					if skin1.arms ~= skin2.arms then
+						TriggerEvent('skinchanger:loadClothes', skin2, {['arms'] = skin1.arms});
+					else
+						TriggerEvent('skinchanger:loadClothes', skin2, {['arms'] = 15});
+					end
+				end)
+			end)
+		end
+	end)
+	Items:AddButton("Pantalon", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		if (onSelected) then
+			startAnimation('re@construction', 'out_of_breath');
+			Citizen.Wait(1000);
+			ClearPedTasks(PlayerPedId());
+			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin1)
+				TriggerEvent('skinchanger:getSkin', function(skin2)
+					if skin1.pants_1 ~= skin2.pants_1 then
+						TriggerEvent('skinchanger:loadClothes', skin2, {['pants_1'] = skin1.pants_1, ['pants_2'] = skin1.pants_2});
+					else
+						TriggerEvent('skinchanger:loadClothes', skin2, {['pants_1'] = 21, ['pants_2'] = 0});
+					end
+				end)
+			end)
+		end
+	end)
+	Items:AddButton("Chaussures", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		if (onSelected) then
+			startAnimation('random@domestic', 'pickup_low');
+			Citizen.Wait(1000);
+			ClearPedTasks(PlayerPedId());
+			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin1)
+				TriggerEvent('skinchanger:getSkin', function(skin2)
+					if skin1.sex == 0 then
+						if skin1.shoes_1 ~= skin2.shoes_1 then
+							TriggerEvent('skinchanger:loadClothes', skin2, {['shoes_1'] = skin1.shoes_1, ['shoes_2'] = skin1.shoes_2});
+						else
+							TriggerEvent('skinchanger:loadClothes', skin2, {['shoes_1'] = 34, ['shoes_2'] = 0});
+						end
+					else
+						if skin1.shoes_1 ~= skin2.shoes_1 then
+							TriggerEvent('skinchanger:loadClothes', skin2, {['shoes_1'] = skin1.shoes_1, ['shoes_2'] = skin1.shoes_2});
+						else
+							TriggerEvent('skinchanger:loadClothes', skin2, {['shoes_1'] = 35, ['shoes_2'] = 0});
+						end
+					end
+				end)
+			end)
+		end
+	end)
+end, function()
+end)
+
+accessoire:IsVisible(function(Items)
+	Items:AddButton("Chapeau", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		if (onSelected) then
+			startAnimation('missheist_agency2ahelmet', 'take_off_helmet_stand');
+			Citizen.Wait(1000);
+			ClearPedTasks(PlayerPedId());
+			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin1)
+				TriggerEvent('skinchanger:getSkin', function(skin2)
+					if skin1.helmet_1 ~= skin2.helmet_1 then
+						TriggerEvent('skinchanger:loadClothes', skin2, {['helmet_1'] = skin1.helmet_1, ['helmet_2'] = skin1.helmet_2});
+					else
+						TriggerEvent('skinchanger:loadClothes', skin2, {['helmet_1'] = -1, ['helmet_2'] = 0});
+					end
+				end)
+			end)
+		end
+	end)
+	Items:AddButton("Mask", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		if (onSelected) then
+			startAnimation('mp_masks@standard_car@ds@', 'put_on_mask');
+			Citizen.Wait(1000);
+			ClearPedTasks(PlayerPedId());
+			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin1)
+				TriggerEvent('skinchanger:getSkin', function(skin2)
+					if skin1.mask_1 ~= skin2.mask_1 then
+						TriggerEvent('skinchanger:loadClothes', skin2, {['mask_1'] = skin1.mask_1, ['mask_2'] = skin1.mask_2});
+					else
+						TriggerEvent('skinchanger:loadClothes', skin2, {['mask_1'] = 0, ['mask_2'] = 0});
+					end
+				end)
+			end)
+		end
+	end)
+	Items:AddButton("Oreille", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		if (onSelected) then
+			startAnimation('mp_cp_stolen_tut', 'b_think');
+			Citizen.Wait(1000);
+			ClearPedTasks(PlayerPedId());
+			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin1)
+				TriggerEvent('skinchanger:getSkin', function(skin2)
+					if skin1.ears_1 ~= skin2.ears_1 then
+						TriggerEvent('skinchanger:loadClothes', skin2, {['ears_1'] = skin1.ears_1, ['ears_2'] = skin1.ears_2});
+					else
+						TriggerEvent('skinchanger:loadClothes', skin2, {['ears_1'] = -1, ['ears_2'] = 0});
+					end
+				end)
+			end)
+		end
+	end)
+	Items:AddButton("Lunette", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		if (onSelected) then
+			startAnimation('clothingspecs', 'take_off');
+			Citizen.Wait(1000);
+			ClearPedTasks(PlayerPedId());
+			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin1)
+				TriggerEvent('skinchanger:getSkin', function(skin2)
+					if skin1.glasses_1 ~= skin2.glasses_1 then
+						TriggerEvent('skinchanger:loadClothes', skin2, {['glasses_1'] = skin1.glasses_1, ['glasses_2'] = skin1.glasses_2});
+					else
+						TriggerEvent('skinchanger:loadClothes', skin2, {['glasses_1'] = 0, ['glasses_2'] = 0});
+					end
+				end)
+			end)
+		end
+	end)
+	Items:AddButton("Chaine", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		if (onSelected) then
+			startAnimation('clothingtie', 'try_tie_negative_a');
+			Citizen.Wait(1000);
+			ClearPedTasks(PlayerPedId());
+			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin1)
+				TriggerEvent('skinchanger:getSkin', function(skin2)
+					if skin1.chain_1 ~= skin2.chain_1 then
+						TriggerEvent('skinchanger:loadClothes', skin2, {['chain_1'] = skin1.chain_1, ['chain_2'] = skin1.chain_2});
+					else
+						TriggerEvent('skinchanger:loadClothes', skin2, {['chain_1'] = 0, ['chain_2'] = 0});
+					end
+				end)
+			end)
+		end
+	end)
+	Items:AddButton("Bracelets", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		if (onSelected) then
+			startAnimation('nmt_3_rcm-10', 'cs_nigel_dual-10');
+			Citizen.Wait(1000);
+			ClearPedTasks(PlayerPedId());
+			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin1)
+				TriggerEvent('skinchanger:getSkin', function(skin2)
+					if skin1.bracelets_1 ~= skin2.bracelets_1 then
+						TriggerEvent('skinchanger:loadClothes', skin2, {['bracelets_1'] = skin1.bracelets_1, ['bracelets_2'] = skin1.bracelets_2});
+					else
+						TriggerEvent('skinchanger:loadClothes', skin2, {['bracelets_1'] = -1, ['bracelets_2'] = 0});
+					end
+				end)
+			end)
+		end
+	end)
+	Items:AddButton("Montre", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		if (onSelected) then
+			startAnimation('nmt_3_rcm-10', 'cs_nigel_dual-10');
+			Citizen.Wait(1000);
+			ClearPedTasks(PlayerPedId());
+			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin1)
+				TriggerEvent('skinchanger:getSkin', function(skin2)
+					if skin1.watches_1 ~= skin2.watches_1 then
+						TriggerEvent('skinchanger:loadClothes', skin2, {['watches_1'] = skin1.watches_1, ['watches_2'] = skin1.watches_2});
+					else
+						TriggerEvent('skinchanger:loadClothes', skin2, {['watches_1'] = -1, ['watches_2'] = 0});
+					end
+				end)
+			end)
+		end
+	end)
+	Items:AddButton("Sac", nil, { RightLabel = ">", IsDisabled = false }, function(onSelected)
+		if (onSelected) then
+			startAnimation('clothingtie', 'try_tie_neutral_a');
+			Citizen.Wait(1000);
+			ClearPedTasks(PlayerPedId());
+			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin1)
+				TriggerEvent('skinchanger:getSkin', function(skin2)
+					if skin1.bags_1 ~= skin2.bags_1 then
+						TriggerEvent('skinchanger:loadClothes', skin2, {['bags_1'] = skin1.bags_1, ['bags_2'] = skin1.bags_2});
+					else
+						TriggerEvent('skinchanger:loadClothes', skin2, {['bags_1'] = 0, ['bags_2'] = 0});
+					end
+				end)
+			end)
+		end
+	end)
+end, function()
+end)
+--------------- fin vetement accessoire ---------------
+
 end
 
 --------------- porte feuille ---------------
@@ -981,4 +1243,16 @@ vehicle = {
         return RollUpWindow(vehicle.currentVehicle(),arg)
     end,
 }
+
 --------------- fin vehicule ---------------
+
+--------------- vetement accessoire ---------------
+
+function startAnimation(lib, anim)
+	ESX.Streaming.RequestAnimDict(lib, function()
+		TaskPlayAnim(PlayerPedId(), lib, anim, 8.0, 1.0, -1, 49, 0, false, false, false)
+		RemoveAnimDict(lib)
+	end)
+end
+
+--------------- fin vetement accessoire ---------------
