@@ -9,7 +9,7 @@ local personalf5 = {
 	handsUp = false,
 }
 
-accounts = nil
+local accounts = {}
 
 local PlayerProps = {}
 
@@ -20,14 +20,15 @@ local stylevide = { BackgroundColor={255, 255, 255, 0}, Line = {250, 250 ,250, 2
 Citizen.CreateThread(function()
 	while ESX == nil do
 		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-		Citizen.Wait(100)
+		Citizen.Wait(0)
 	end
-
-	ESX.PlayerData = ESX.GetPlayerData()
 
 	while ESX.GetPlayerData().job == nil do
-		Citizen.Wait(100)
+		Citizen.Wait(0)
 	end
+
+	PlayerLoaded = true
+	ESX.PlayerData = ESX.GetPlayerData()
 
 	RefreshMoney()
 
@@ -73,8 +74,13 @@ local vetementaccessoire = RageUI.CreateSubMenu(Foltonef5, "Vetement", "Vetement
 local vetement = RageUI.CreateSubMenu(vetementaccessoire, "Vetement", "Vetement")
 local accessoire = RageUI.CreateSubMenu(vetementaccessoire, "Accessoire", "Accessoire")
 
---------------- fuction ---------------
+--------------- Event ---------------
 
+RegisterNetEvent('esx:playerLoaded')
+AddEventHandler('esx:playerLoaded', function(xPlayer)
+	ESX.PlayerData = xPlayer
+	PlayerLoaded = true
+end)
 
 RegisterNetEvent('foltone:Weapon_addAmmoToPedC')
 AddEventHandler('foltone:Weapon_addAmmoToPedC', function(value, quantity)
@@ -153,7 +159,7 @@ function CheckQuantity(number)
 	return false, number
 end
 
---------------- fin fuction ---------------
+--------------- fin event ---------------
 
 
 Keys.Register("F5", "F5", "Test", function()
